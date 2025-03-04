@@ -4,16 +4,15 @@
 # This format is based on clang 14 version formatter.
 
 BasedOnStyle: Google
-AccessModifierOffset: -4
 
+AccessModifierOffset: -4
+AlignConsecutiveBitFields: None
+AlignConsecutiveDeclarations: None
 AlignConsecutiveMacros:
     Enabled: true
     AcrossEmptyLines: false
     AcrossComments: false
     AlignCompound: false
-AlignConsecutiveBitFields: None
-AlignConsecutiveDeclarations: None
-AlignConsecutiveMacros: None
 AlignEscapedNewlines: Left
 AlignOperands: true
 AlignTrailingComments: true
