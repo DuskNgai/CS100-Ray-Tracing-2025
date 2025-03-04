@@ -15,6 +15,12 @@ This project is intended for recitation of Introduction to Programming (CS100) a
 3. Introduction to git and github.
 4. Compiling and running a program through Visual Studio/GCC/Clang.
 
+### Week 3
+
+1. Fixed width integer types.
+2. Functions and function prototypes.
+3. C standard library.
+
 ## How to Run the Program
 
 ```bash
