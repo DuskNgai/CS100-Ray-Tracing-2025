@@ -21,6 +21,16 @@ This project is intended for recitation of Introduction to Programming (CS100) a
 2. Functions and function prototypes.
 3. C standard library.
 
+### Week 4
+
+1. Pointers & arrays.
+2. Dynamic memory allocation.
+
+### Week 5
+
+1. Preprocessor directives.
+2. Multiple source files & header files.
+
 ## How to Run the Program
 
 ```bash

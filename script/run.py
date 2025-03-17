@@ -56,7 +56,7 @@ if not output_dir.exists():
 
 
 info("[script] Compiling...")
-run(args="gcc src/*.c -o build/CS100-Ray-Tracing -O3 -std=c17 -Wall -Wextra -Wpedantic -Werror -lm")
+run(args="gcc src/*.c -o build/CS100-Ray-Tracing -I include -O3 -std=c17 -Wall -Wextra -Wpedantic -Werror -lm")
 
 ppm_file = output_dir.joinpath("image.ppm")
 png_file = ppm_file.with_suffix(".png")

@@ -23,20 +23,18 @@
 
 #include <assert.h>
 #include <inttypes.h>
-#include <math.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-void render(double* film, uint32_t image_width, uint32_t image_height);
+#include "film.h"
+#include "renderer.h"
 
-void save(double* film, uint32_t image_width, uint32_t image_height);
 
 int main(void) {
     uint32_t image_width, image_height;
     scanf("%" PRIu32 "%" PRIu32, &image_width, &image_height);
 
-    double* film = (double*)malloc((image_width * image_height * 3) * sizeof(double));
+    Float* film = (Float*)malloc((image_width * image_height * 3) * sizeof(Float));
     assert(film != NULL);
 
     render(film, image_width, image_height);
@@ -46,29 +44,29 @@ int main(void) {
     return 0;
 }
 
-void render(double* film, uint32_t image_width, uint32_t image_height) {
+void render(Float* film, uint32_t image_width, uint32_t image_height) {
     for (uint32_t y = 0; y < image_height; ++y) {
         for (uint32_t x = 0; x < image_width; ++x) {
             // Initialize z and c.
-            double z_real = 0, z_imag = 0;
-            double c_real = (2.0 * x + 1.0) / (double)image_width - 1.5;
-            double c_imag = (2.0 * y + 1.0) / (double)image_height - 1.0;
+            Float z_real = 0, z_imag = 0;
+            Float c_real = (2.0 * x + 1.0) / (Float)image_width - 1.5;
+            Float c_imag = (2.0 * y + 1.0) / (Float)image_height - 1.0;
 
             // Perform the Mandelbrot algorithm, z = z^2 + c.
             uint32_t num_iter = 0, max_iter = 2048;
             while (z_real * z_real + z_imag * z_imag <= 4 && num_iter < max_iter) {
-                double z_real_new = z_real * z_real - z_imag * z_imag + c_real;
-                double z_imag_new = 2 * z_real * z_imag + c_imag;
+                Float z_real_new = z_real * z_real - z_imag * z_imag + c_real;
+                Float z_imag_new = 2 * z_real * z_imag + c_imag;
                 z_real = z_real_new;
                 z_imag = z_imag_new;
                 ++num_iter;
             }
 
             // Output RGB color.
-            double r = 0.0, g = 0.0, b = 0.0;
+            Float r = 0.0, g = 0.0, b = 0.0;
             if (num_iter != max_iter) {
                 // [1, max_iter] -> [0.0, 1.0]
-                double t = log((double)num_iter) / log((double)max_iter);
+                Float t = log((Float)num_iter) / log((Float)max_iter);
                 r = t;
                 g = t;
                 b = 0.5 - 0.5 * t;
@@ -82,16 +80,16 @@ void render(double* film, uint32_t image_width, uint32_t image_height) {
     }
 }
 
-void save(double* film, uint32_t image_width, uint32_t image_height) {
+void save(Float* film, uint32_t image_width, uint32_t image_height) {
     // Output PPM header.
     printf("P3\n%" PRIu32 " %" PRIu32 "\n255\n", image_width, image_height);
 
     for (uint32_t y = 0; y < image_height; ++y) {
         for (uint32_t x = 0; x < image_width; ++x) {
             // Read RGB color.
-            double r = film[(y * image_width + x) * 3 + 0];
-            double g = film[(y * image_width + x) * 3 + 1];
-            double b = film[(y * image_width + x) * 3 + 2];
+            Float r = film[(y * image_width + x) * 3 + 0];
+            Float g = film[(y * image_width + x) * 3 + 1];
+            Float b = film[(y * image_width + x) * 3 + 2];
 
             // [0.0, 1.0] -> [0, 255]
             uint8_t ir = (uint8_t)(r * 255.0);
