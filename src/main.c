@@ -21,23 +21,32 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
+#include <assert.h>
 #include <inttypes.h>
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-void render(uint32_t image_width, uint32_t image_height);
+void render(double* film, uint32_t image_width, uint32_t image_height);
+
+void save(double* film, uint32_t image_width, uint32_t image_height);
 
 int main(void) {
     uint32_t image_width, image_height;
     scanf("%" PRIu32 "%" PRIu32, &image_width, &image_height);
-    printf("P3\n%" PRIu32 " %" PRIu32 "\n255\n", image_width, image_height);
 
-    render(image_width, image_height);
+    double* film = (double*)malloc((image_width * image_height * 3) * sizeof(double));
+    assert(film != NULL);
+
+    render(film, image_width, image_height);
+    save(film, image_width, image_height);
+
+    free(film);
     return 0;
 }
 
-void render(uint32_t image_width, uint32_t image_height) {
+void render(double* film, uint32_t image_width, uint32_t image_height) {
     for (uint32_t y = 0; y < image_height; ++y) {
         for (uint32_t x = 0; x < image_width; ++x) {
             // Initialize z and c.
@@ -56,23 +65,41 @@ void render(uint32_t image_width, uint32_t image_height) {
             }
 
             // Output RGB color.
-            if (num_iter == max_iter) {
-                printf("0 0 0\n");
-            }
-            else {
+            double r = 0.0, g = 0.0, b = 0.0;
+            if (num_iter != max_iter) {
                 // [1, max_iter] -> [0.0, 1.0]
                 double t = log((double)num_iter) / log((double)max_iter);
-                double r = t;
-                double g = t;
-                double b = 0.5 - 0.5 * t;
-
-                // [0.0, 1.0] -> [0, 255]
-                uint8_t ir = (uint8_t)(255.0 * r);
-                uint8_t ig = (uint8_t)(255.0 * g);
-                uint8_t ib = (uint8_t)(255.0 * b);
-
-                printf("%" PRIu8 " %" PRIu8 " %" PRIu8 "\n", ir, ig, ib);
+                r = t;
+                g = t;
+                b = 0.5 - 0.5 * t;
             }
+
+            // Store RGB color.
+            film[(y * image_width + x) * 3 + 0] = r;
+            film[(y * image_width + x) * 3 + 1] = g;
+            film[(y * image_width + x) * 3 + 2] = b;
+        }
+    }
+}
+
+void save(double* film, uint32_t image_width, uint32_t image_height) {
+    // Output PPM header.
+    printf("P3\n%" PRIu32 " %" PRIu32 "\n255\n", image_width, image_height);
+
+    for (uint32_t y = 0; y < image_height; ++y) {
+        for (uint32_t x = 0; x < image_width; ++x) {
+            // Read RGB color.
+            double r = film[(y * image_width + x) * 3 + 0];
+            double g = film[(y * image_width + x) * 3 + 1];
+            double b = film[(y * image_width + x) * 3 + 2];
+
+            // [0.0, 1.0] -> [0, 255]
+            uint8_t ir = (uint8_t)(r * 255.0);
+            uint8_t ig = (uint8_t)(g * 255.0);
+            uint8_t ib = (uint8_t)(b * 255.0);
+
+            // Output RGB color.
+            printf("%" PRIu8 " %" PRIu8 " %" PRIu8 "\n", ir, ig, ib);
         }
     }
 }
