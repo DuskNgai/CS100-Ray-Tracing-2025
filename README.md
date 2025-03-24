@@ -25,11 +25,18 @@ This project is intended for recitation of Introduction to Programming (CS100) a
 
 1. Pointers & arrays.
 2. Dynamic memory allocation.
+3. Assertions.
 
 ### Week 5
 
 1. Preprocessor directives.
 2. Multiple source files & header files.
+
+### Week 6
+
+1. Structs.
+2. C style objects-oriented programming.
+3. Generic selection (C11 standard).
 
 ## How to Run the Program
 
