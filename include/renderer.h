@@ -11,9 +11,11 @@
 
 #include <stdint.h>
 
-#include "film.h"
+#include "camera.h"
 #include "sphere.h"
 
-void render(Film* film, Sphere const* sphere);
+void render(Camera* camera, Sphere const* sphere);
+
+Color3f get_color(Ray const* ray, Sphere const* sphere);
 
 #endif // !_CS100_RAY_TRACING_RENDERER_H_

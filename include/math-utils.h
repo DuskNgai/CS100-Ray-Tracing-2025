@@ -22,6 +22,13 @@ typedef float Float;
         double: sqrt,      \
         long double: sqrtl \
     )(x)
+
+#define tan(x)            \
+    _Generic((x),         \
+        float: tanf,      \
+        double: tan,      \
+        long double: tanl \
+    )(x)
 // clang-format on
 
 #endif // !_CS100_RAY_TRACING_MATH_UTILS_H_

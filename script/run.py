@@ -60,10 +60,12 @@ run(args="gcc src/*.c -o build/CS100-Ray-Tracing -I include -O3 -std=c17 -Wall -
 
 ppm_file = output_dir.joinpath("image.ppm")
 png_file = ppm_file.with_suffix(".png")
+image_width = 960
+image_height = 540
 
 info("[script] Generating ppm file...")
 with open(ppm_file, "w") as f:
-    run(args="./build/CS100-Ray-Tracing", stdout=f)
+    run(args=f"./build/CS100-Ray-Tracing {image_width} {image_height} {str(ppm_file)}")
 
 info("[script] Converting ppm file to png file...")
 Image.open(ppm_file).save(png_file)

@@ -25,8 +25,12 @@ void film_destroy(Film* film);
 
 Color3f film_get_pixel(Film const* film, uint32_t x, uint32_t y);
 
-void film_set_pixel(Film const* film, uint32_t x, uint32_t y, Color3f color);
+void film_set_pixel(Film* film, uint32_t x, uint32_t y, Color3f color);
 
-void film_save(Film const* film);
+/// @brief Get the aspect ratio of the film.
+Float film_get_aspect_ratio(Film const* film);
+
+/// @brief Save the image in film to filename.
+void film_save(Film const* film, char const* filename);
 
 #endif // !_CS100_RAY_TRACING_FILM_H_

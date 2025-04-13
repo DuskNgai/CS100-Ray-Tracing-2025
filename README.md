@@ -38,6 +38,11 @@ This project is intended for recitation of Introduction to Programming (CS100) a
 2. C style objects-oriented programming.
 3. Generic selection (C11 standard).
 
+### Week 7
+
+1. File I/O.
+2. Command line arguments.
+
 ## How to Run the Program
 
 ```bash

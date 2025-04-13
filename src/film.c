@@ -36,18 +36,28 @@ Color3f film_get_pixel(Film const* film, uint32_t x, uint32_t y) {
     return film->pixels[y * film->width + x];
 }
 
-void film_set_pixel(Film const* film, uint32_t x, uint32_t y, Color3f color) {
+void film_set_pixel(Film* film, uint32_t x, uint32_t y, Color3f color) {
     assert(x < film->width && y < film->height);
     film->pixels[y * film->width + x] = color;
 }
 
-void film_save(Film const* film) {
+Float film_get_aspect_ratio(Film const* film) {
+    assert(film != NULL);
+    return (Float)film->width / (Float)film->height;
+}
+
+void film_save(Film const* film, char const* filename) {
+    assert(film != NULL);
+    assert(filename != NULL);
+    
+    FILE* file = fopen(filename, "w");
+    assert(file != NULL);
+    
     uint32_t image_width = film->width;
     uint32_t image_height = film->height;
-
+    
     // Output PPM header.
-    printf("P3\n%" PRIu32 " %" PRIu32 "\n255\n", image_width, image_height);
-
+    fprintf(file, "P3\n%" PRIu32 " %" PRIu32 "\n255\n", image_width, image_height);
     for (uint32_t y = 0; y < image_height; ++y) {
         for (uint32_t x = 0; x < image_width; ++x) {
             // Read RGB color.
@@ -59,7 +69,10 @@ void film_save(Film const* film) {
             uint8_t ib = (uint8_t)(color.z * 255.0);
 
             // Output RGB color.
-            printf("%" PRIu8 " %" PRIu8 " %" PRIu8 "\n", ir, ig, ib);
+            fprintf(file, "%" PRIu8 " %" PRIu8 " %" PRIu8 "\n", ir, ig, ib);
         }
     }
+
+    // Close the file.
+    fclose(file);
 }

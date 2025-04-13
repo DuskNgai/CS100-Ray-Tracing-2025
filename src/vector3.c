@@ -6,9 +6,9 @@
  * Email: daihzh2023@shanghaitech.edu.cn
  */
 
-#include <stdio.h>
-
 #include "vector3.h"
+
+#include <stdio.h>
 
 Vector3f vector3_add(Vector3f u, Vector3f v) {
     return (Vector3f){
@@ -73,7 +73,7 @@ Vector3f vector3_unit(Vector3f u) {
 }
 
 Vector3f vector3_lerp(Vector3f u, Vector3f v, Float t) {
-    return vector3_add(u, vector3_scalar_mul(vector3_sub(u, v), t));
+    return vector3_add(u, vector3_scalar_mul(vector3_sub(v, u), t));
 }
 
 void vector3_print(Vector3f u) {
