@@ -21,10 +21,10 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-#include <assert.h>
-#include <inttypes.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cassert>
+#include <cinttypes>
+#include <cstdio>
+#include <cstdlib>
 
 #include "film.h"
 #include "renderer.h"
@@ -33,34 +33,32 @@
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
-        fprintf(stderr, "Usage: %s <image_width> <image_height> <output_file>\n", argv[0]);
+        std::fprintf(stderr, "Usage: %s <image_width> <image_height> <output_file>\n", argv[0]);
         return 1;
     }
 
     uint32_t image_width = (uint32_t)strtoul(argv[1], NULL, 10);
     uint32_t image_height = (uint32_t)strtoul(argv[2], NULL, 10);
-    if (image_width > 8192 || image_height > 8192) {
-        fprintf(stderr, "Image sizes too large: %s x %s\n", argv[1], argv[2]);
+    if (image_width > 8192 or image_height > 8192) {
+        std::fprintf(stderr, "Image sizes too large: %s x %s\n", argv[1], argv[2]);
         return 1;
     }
-    printf("Rendering %" PRIu32 " x %" PRIu32 " image.\n", image_width, image_height);
+    std::printf("Rendering %" PRIu32 " x %" PRIu32 " image.\n", image_width, image_height);
 
-    Film* film = film_create(image_width, image_height);
-    Camera* camera = camera_create(
-        (Point3f){ 0.0, 0.0, 0.0 },
-        (Point3f){ 0.0, 0.0, -1.0 },
-        (Vector3f){ 0.0, 1.0, 0.0 },
+    Film film(image_width, image_height);
+    Camera camera(
+        { 0.0, 0.0, 0.0 },
+        { 0.0, 0.0, -1.0 },
+        { 0.0, 1.0, 0.0 },
         M_PI_2,
         1.0,
-        film_get_aspect_ratio(film)
+        film.get_aspect_ratio()
     );
-    camera_set_film(camera, film);
-    Sphere sphere = { (Point3f){ 0.0, 0.0, -1.0 }, 0.5 };
+    camera.set_film(&film);
+    Sphere sphere({ 0.0, 0.0, -1.0 }, 0.5);
 
-    render(camera, &sphere);
-    film_save(film, argv[3]);
+    render(camera, sphere);
+    film.save(argv[3]);
 
-    film_destroy(film);
-    camera_destroy(camera);
     return 0;
 }

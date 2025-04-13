@@ -12,7 +12,8 @@
 #include "film.h"
 #include "ray.h"
 
-typedef struct Camera {
+class Camera {
+public:
     Point3f look_from;
     Point3f look_to;
     Vector3f ref_up;
@@ -29,17 +30,16 @@ typedef struct Camera {
     Vector3f vertical;
 
     Film* film;
-} Camera;
 
-Camera* camera_create(Point3f look_from, Point3f look_to, Vector3f ref_up, Float y_fov, Float focal_length, Float aspect_ratio);
+public:
+    Camera(Point3f look_from, Point3f look_to, Vector3f ref_up, Float y_fov, Float focal_length, Float aspect_ratio);
 
-void camera_destroy(Camera* camera);
+public:
+    void set_film(Film* film);
+    void set_pixel(uint32_t x, uint32_t y, Color3f color);
 
-void camera_set_film(Camera* camera, Film* film);
-
-void camera_set_pixel(Camera* camera, uint32_t x, uint32_t y, Color3f color);
-
-/// @brief get a ray from the camera to the pixel (x, y).
-Ray camera_get_ray(Camera const* camera, uint32_t x, uint32_t y);
+    /// @brief Get a ray from the camera to the pixel (x, y).
+    Ray get_ray(uint32_t x, uint32_t y) const;
+};
 
 #endif // !_CS100_RAY_TRACING_CAMERA_H_

@@ -43,6 +43,15 @@ This project is intended for recitation of Introduction to Programming (CS100) a
 1. File I/O.
 2. Command line arguments.
 
+### Week 8
+
+### Week 9
+
+1. C++ style objects-oriented programming.
+2. Constructors & destructors.
+3. Introduction to RAII.
+4. Pass by reference & pass by pointer.
+
 ## How to Run the Program
 
 ```bash

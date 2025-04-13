@@ -9,28 +9,31 @@
 #ifndef _CS100_RAY_TRACING_FILM_H_
 #define _CS100_RAY_TRACING_FILM_H_
 
-#include <stdint.h>
+#include <cstdint>
+#include <string>
+#include <vector>
 
 #include "vector3.h"
 
-typedef struct Film {
+class Film {
+public:
     uint32_t width;
     uint32_t height;
-    Color3f* pixels;
-} Film;
+    std::vector<Color3f> pixels;
 
-Film* film_create(uint32_t width, uint32_t height);
+public:
+    Film(uint32_t width, uint32_t height);
 
-void film_destroy(Film* film);
+public:
+    Color3f get_pixel(uint32_t x, uint32_t y) const;
+    void set_pixel(uint32_t x, uint32_t y, Color3f color);
 
-Color3f film_get_pixel(Film const* film, uint32_t x, uint32_t y);
+    /// @brief Get the aspect ratio of the film.
+    Float get_aspect_ratio() const;
 
-void film_set_pixel(Film* film, uint32_t x, uint32_t y, Color3f color);
+    /// @brief Save the image in film to filename.
+    void save(std::string const& filename) const;
+};
 
-/// @brief Get the aspect ratio of the film.
-Float film_get_aspect_ratio(Film const* film);
-
-/// @brief Save the image in film to filename.
-void film_save(Film const* film, char const* filename);
 
 #endif // !_CS100_RAY_TRACING_FILM_H_

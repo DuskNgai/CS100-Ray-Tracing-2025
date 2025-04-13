@@ -11,8 +11,6 @@
 #include <assert.h>
 #include <stddef.h>
 
-Point3f ray_at(Ray const* r, Float t) {
-    assert(r != NULL);
-
-    return vector3_add(r->origin, vector3_scalar_mul(r->direction, t));
+Point3f Ray::at(Float t) const {
+    return vector3_add(this->origin, vector3_scalar_mul(this->direction, t));
 }

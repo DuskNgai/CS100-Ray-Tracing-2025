@@ -9,13 +9,13 @@
 #ifndef _CS100_RAY_TRACING_RENDERER_H_
 #define _CS100_RAY_TRACING_RENDERER_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "camera.h"
 #include "sphere.h"
 
-void render(Camera* camera, Sphere const* sphere);
+void render(Camera& camera, Sphere const& sphere);
 
-Color3f get_color(Ray const* ray, Sphere const* sphere);
+Color3f get_color(Ray const& ray, Sphere const& sphere);
 
 #endif // !_CS100_RAY_TRACING_RENDERER_H_

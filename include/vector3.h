@@ -11,9 +11,9 @@
 
 #include "math-utils.h"
 
-typedef struct Vector3f {
+struct Vector3f {
     Float x, y, z;
-} Vector3f;
+};
 
 /// @brief u + v
 Vector3f vector3_add(Vector3f u, Vector3f v);

@@ -8,10 +8,10 @@
 
 #include "vector3.h"
 
-#include <stdio.h>
+#include <cstdio>
 
 Vector3f vector3_add(Vector3f u, Vector3f v) {
-    return (Vector3f){
+    return {
         u.x + v.x,
         u.y + v.y,
         u.z + v.z
@@ -20,7 +20,7 @@ Vector3f vector3_add(Vector3f u, Vector3f v) {
 
 
 Vector3f vector3_sub(Vector3f u, Vector3f v) {
-    return (Vector3f){
+    return {
         u.x - v.x,
         u.y - v.y,
         u.z - v.z
@@ -29,7 +29,7 @@ Vector3f vector3_sub(Vector3f u, Vector3f v) {
 
 
 Vector3f vector3_neg(Vector3f u) {
-    return (Vector3f){
+    return {
         -u.x,
         -u.y,
         -u.z
@@ -37,7 +37,7 @@ Vector3f vector3_neg(Vector3f u) {
 }
 
 Vector3f vector3_scalar_mul(Vector3f u, Float a) {
-    return (Vector3f){
+    return {
         u.x * a,
         u.y * a,
         u.z * a
@@ -53,7 +53,7 @@ Float vector3_dot(Vector3f u, Vector3f v) {
 }
 
 Vector3f vector3_cross(Vector3f u, Vector3f v) {
-    return (Vector3f){
+    return {
         u.y * v.z - u.z * v.y,
         u.z * v.x - u.x * v.z,
         u.x * v.y - u.y * v.x
@@ -61,7 +61,7 @@ Vector3f vector3_cross(Vector3f u, Vector3f v) {
 }
 
 Float vector3_norm(Vector3f u) {
-    return sqrt(vector3_square_norm(u));
+    return std::sqrt(vector3_square_norm(u));
 }
 
 Float vector3_square_norm(Vector3f u) {
@@ -77,5 +77,5 @@ Vector3f vector3_lerp(Vector3f u, Vector3f v, Float t) {
 }
 
 void vector3_print(Vector3f u) {
-    printf("x: %f, y: %f, z: %f\n", u.x, u.y, u.z);
+    std::printf("x: %f, y: %f, z: %f\n", u.x, u.y, u.z);
 }

@@ -11,11 +11,13 @@
 
 #include "vector3.h"
 
-typedef struct Ray {
+class Ray {
+public:
     Vector3f origin;
     Vector3f direction;
-} Ray;
 
-Vector3f ray_at(Ray const* ray, Float t);
+public:
+    Point3f at(Float t) const;
+};
 
 #endif // !_CS100_RAY_TRACING_RAY_H_

@@ -9,16 +9,20 @@
 #ifndef _CS100_RAY_TRACING_SPHERE_H_
 #define _CS100_RAY_TRACING_SPHERE_H_
 
-#include <stdbool.h>
-
 #include "interaction.h"
 #include "ray.h"
 
-typedef struct Sphere {
+class Sphere {
+public:
     Point3f center;
     Float radius;
-} Sphere;
 
-bool sphere_hit(Sphere const* sphere, Ray const* ray, Float t_min, Float t_max, Interaction* interaction);
+public:
+    Sphere(Point3f c, Float r);
+
+public:
+    bool hit(const Ray& ray, Float t_min, Float t_max, Interaction* interaction) const;
+};
+
 
 #endif // !_CS100_RAY_TRACING_SPHERE_H_
