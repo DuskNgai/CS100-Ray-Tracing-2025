@@ -8,10 +8,10 @@
 
 #include "renderer.h"
 
-#include <assert.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <inttypes.h>
+#include <cassert>
+#include <cinttypes>
+#include <cstddef>
+#include <cstdio>
 
 #include "ray.h"
 
@@ -37,10 +37,10 @@ Color3f get_color(Ray const& ray, Sphere const& sphere) {
 
     // Trace ray.
     if (sphere.hit(ray, 0.0, 100.0, &interaction)) {
-        return vector3_scalar_mul(vector3_add(interaction.normal, { 1.0, 1.0, 1.0 }), 0.5);
+        return (interaction.normal + Vector3f{ 1.0, 1.0, 1.0 }) * 0.5;
     }
     else {
-        Float t = 0.5 * (vector3_unit(ray.direction).y + 1.0);
-        return vector3_lerp({ 1.0, 1.0, 1.0 }, { 0.5, 0.7, 1.0 }, t);
+        Float t = 0.5 * (unit(ray.direction).y + 1.0);
+        return lerp({ 1.0, 1.0, 1.0 }, { 0.5, 0.7, 1.0 }, t);
     }
 }

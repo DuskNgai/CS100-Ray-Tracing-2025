@@ -11,8 +11,7 @@
 
 #include "vector3.h"
 
-class Ray {
-public:
+struct Ray {
     Vector3f origin;
     Vector3f direction;
 

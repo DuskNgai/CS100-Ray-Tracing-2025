@@ -12,5 +12,5 @@
 #include <stddef.h>
 
 Point3f Ray::at(Float t) const {
-    return vector3_add(this->origin, vector3_scalar_mul(this->direction, t));
+    return this->origin + this->direction * t;
 }

@@ -8,51 +8,56 @@
 
 #include "vector3.h"
 
-#include <cstdio>
-
-Vector3f vector3_add(Vector3f u, Vector3f v) {
+Vector3f Vector3f::operator+(const Vector3f& v) const {
     return {
-        u.x + v.x,
-        u.y + v.y,
-        u.z + v.z
+        x + v.x,
+        y + v.y,
+        z + v.z
     };
 }
 
-
-Vector3f vector3_sub(Vector3f u, Vector3f v) {
+Vector3f Vector3f::operator-(const Vector3f& v) const {
     return {
-        u.x - v.x,
-        u.y - v.y,
-        u.z - v.z
+        x - v.x,
+        y - v.y,
+        z - v.z
     };
 }
 
-
-Vector3f vector3_neg(Vector3f u) {
+Vector3f Vector3f::operator-() const {
     return {
-        -u.x,
-        -u.y,
-        -u.z
+        -x,
+        -y,
+        -z
     };
 }
 
-Vector3f vector3_scalar_mul(Vector3f u, Float a) {
+Vector3f Vector3f::operator*(Float a) const {
     return {
-        u.x * a,
-        u.y * a,
-        u.z * a
+        x * a,
+        y * a,
+        z * a
     };
 }
 
-Vector3f vector3_scalar_div(Vector3f u, Float a) {
-    return vector3_scalar_mul(u, (Float)1.0 / a);
+Vector3f Vector3f::operator/(Float a) const {
+    return *this * ((Float)1.0 / a);
 }
 
-Float vector3_dot(Vector3f u, Vector3f v) {
+std::ostream& operator<<(std::ostream& os, const Vector3f& v) {
+    os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+    return os;
+}
+
+Vector3f operator*(Float a, const Vector3f& v) {
+    return v * a;
+}
+
+Float dot(const Vector3f& u, const Vector3f& v) {
     return u.x * v.x + u.y * v.y + u.z * v.z;
 }
 
-Vector3f vector3_cross(Vector3f u, Vector3f v) {
+Vector3f cross(const Vector3f& u, const Vector3f& v) {
     return {
         u.y * v.z - u.z * v.y,
         u.z * v.x - u.x * v.z,
@@ -60,22 +65,18 @@ Vector3f vector3_cross(Vector3f u, Vector3f v) {
     };
 }
 
-Float vector3_norm(Vector3f u) {
-    return std::sqrt(vector3_square_norm(u));
+Float norm(const Vector3f& v) {
+    return std::sqrt(square_norm(v));
 }
 
-Float vector3_square_norm(Vector3f u) {
-    return vector3_dot(u, u);
+Float square_norm(const Vector3f& v) {
+    return dot(v, v);
 }
 
-Vector3f vector3_unit(Vector3f u) {
-    return vector3_scalar_div(u, vector3_norm(u));
+Vector3f unit(const Vector3f& v) {
+    return v / norm(v);
 }
 
-Vector3f vector3_lerp(Vector3f u, Vector3f v, Float t) {
-    return vector3_add(u, vector3_scalar_mul(vector3_sub(v, u), t));
-}
-
-void vector3_print(Vector3f u) {
-    std::printf("x: %f, y: %f, z: %f\n", u.x, u.y, u.z);
+Vector3f lerp(const Vector3f& u, const Vector3f& v, Float t) {
+    return u + (v - u) * t;
 }

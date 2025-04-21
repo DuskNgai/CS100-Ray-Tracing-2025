@@ -16,12 +16,12 @@ Sphere::Sphere(Point3f c, Float r)
     , radius(r) {}
 
 bool Sphere::hit(Ray const& ray, Float t_min, Float t_max, Interaction* interaction) const {
-    Vector3f oc = vector3_sub(ray.origin, this->center);
+    Vector3f oc = ray.origin - this->center;
 
     // Convert to a quadratic equation.
-    Float a = vector3_square_norm(ray.direction);
-    Float b_half = vector3_dot(oc, ray.direction);
-    Float c = vector3_square_norm(oc) - this->radius * this->radius;
+    Float a = square_norm(ray.direction);
+    Float b_half = dot(oc, ray.direction);
+    Float c = square_norm(oc) - this->radius * this->radius;
     Float discriminant = b_half * b_half - a * c;
 
     if (discriminant < 0) {
@@ -40,6 +40,6 @@ bool Sphere::hit(Ray const& ray, Float t_min, Float t_max, Interaction* interact
     // Record this interaction.
     interaction->t = t;
     interaction->hit_point = ray.at(t);
-    interaction->normal = vector3_scalar_div(vector3_sub(interaction->hit_point, this->center), this->radius);
+    interaction->normal = (interaction->hit_point - this->center) / this->radius;
     return true;
 }

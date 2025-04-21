@@ -52,6 +52,10 @@ This project is intended for recitation of Introduction to Programming (CS100) a
 3. Introduction to RAII.
 4. Pass by reference & pass by pointer.
 
+### Week 10
+
+1. Operator overloading.
+
 ## How to Run the Program
 
 ```bash
